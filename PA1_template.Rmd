@@ -23,3 +23,104 @@ output:
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+# ####################################################################
+# ####################################################################
+#
+# COURSERA
+# REPRODUCIBLE RESEARCH
+# COURSE PROJECT #1
+# 
+# ####################################################################
+# ####################################################################
+#
+# PART #0 INTRODUCTORY PART, INCL. LOADING DATA
+#
+# ####################################################################
+# ####################################################################
+#
+#
+setwd("/home/xfant0m/#R");library(ggplot2);library(knitr);knitr::opts_chunk$set(
+  warning=FALSE)
+ACTIV <- read.csv("/home/xfant0m/#R/activity.csv");ACTIV$date <- as.POSIXct(
+  ACTIV$date,"%Y-%m-%d");weekday <- weekdays(
+  ACTIV$date);ACTIV <- cbind(ACTIV,
+  weekday)
+summary(ACTIV)
+#
+#
+# ####################################################################
+# ####################################################################
+#
+# PART #1
+#
+# ####################################################################
+# ####################################################################
+#
+#
+ACTIV_total <- with(ACTIV, aggregate(steps, by = list(date), FUN = sum, 
+  na.rm = TRUE));names(ACTIV_total) <- c(
+    "date", "steps");hist(ACTIV_total$steps, 
+    main = "steps per day", 
+    xlab = "steps per day", 
+    col = "red", ylim = c(0,20), breaks = seq(0,25000, by=2500));mean(ACTIV_total$steps)
+median(ACTIV_total$steps)
+#
+#
+# ####################################################################
+# ####################################################################
+#
+# PART #2
+#
+# ####################################################################
+# ####################################################################
+#
+#
+mean_d <- aggregate(ACTIV$steps, 
+    by=list(ACTIV$interval), FUN=mean, na.rm=TRUE);names(mean_d) <- c("interval", 
+    "mean");plot(mean_d$interval, mean_d$mean, type = "l", 
+    col="red", lwd = 2, xlab="Interval", ylab="avg steps", 
+    main="steps per interval")
+#
+#
+# ####################################################################
+# ####################################################################
+#
+# PART #3
+#
+# ####################################################################
+# ####################################################################
+#
+#
+mean_d[which.max(mean_d$mean), ]$interval;sum(is.na(ACTIV$steps))
+stp <- mean_d$mean[match(ACTIV$interval, mean_d$interval)];ACTIV2 <- transform(ACTIV, 
+  steps = ifelse(is.na(ACTIV$steps), yes = stp, no = ACTIV$steps))
+stp2 <- aggregate(steps ~ date, ACTIV2, sum);names(stp2) <- c("date", "daily_steps")
+hist(stp2$daily_steps, col = "red", xlab = "steps per day", 
+  ylim = c(0,30), main = "steps per day", breaks = seq(0,25000,by=2500))
+mean(stp2$daily_steps);median(stp2$daily_steps)
+#
+#
+# ####################################################################
+# ####################################################################
+#
+# PART #4
+#
+# ####################################################################
+# ####################################################################
+#
+#
+ACTIV$date <- as.Date(strptime(ACTIV$date, format="%Y-%m-%d"))
+ACTIV$datetype <- sapply(ACTIV$date, function(x) {
+  if (weekdays(x) == "S?bado" | weekdays(x) =="Domingo") 
+  {y <- "Weekend"} else 
+  {y <- "Weekday"}
+  y
+})
+
+ACTIV3 <- aggregate(steps~interval + datetype, ACTIV, mean, na.rm = TRUE)
+plot<- ggplot(ACTIV3, aes(x = interval , y = steps, color = datetype)) +
+  geom_line() +
+  labs(title = "daily steps by date", x = "Interval", y = "avg steps") +
+  facet_wrap(~datetype, ncol = 1, nrow=2)
+print(plot)
