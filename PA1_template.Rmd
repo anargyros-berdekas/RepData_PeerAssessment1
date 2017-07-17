@@ -68,14 +68,14 @@ mean(stp2$daily_steps);median(stp2$daily_steps)
 #
 #
 ```{r}
+par(mfrow=c(2,1))
 ACTIV$date <- as.Date(strptime(ACTIV$date, format="%Y-%m-%d"))
 ACTIV$datetype <- sapply(ACTIV$date, function(x) {
-  if (weekdays(x) == "S?bado" | weekdays(x) =="Domingo") 
+  if (weekdays(x) == "Saturday" | weekdays(x) =="Sunday")
   {y <- "Weekend"} else 
   {y <- "Weekday"}
   y
 })
-
 ACTIV3 <- aggregate(steps~interval + datetype, ACTIV, mean, na.rm = TRUE)
 plot<- ggplot(ACTIV3, aes(x = interval , y = steps, color = datetype)) +
   geom_line() +
