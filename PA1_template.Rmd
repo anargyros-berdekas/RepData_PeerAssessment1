@@ -65,6 +65,7 @@ mean(stp2$daily_steps);median(stp2$daily_steps)
 #
 # PART 4
 #
+#
 ```{r}
 ACTIV$date <- as.Date(strptime(ACTIV$date, format="%Y-%m-%d"))
 ACTIV$datetype <- sapply(ACTIV$date, function(x) {
