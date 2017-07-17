@@ -49,7 +49,7 @@ mean_d <- aggregate(ACTIV$steps,
 #
 ## Imputing missing values
 #
-# PART #3
+# PART 3
 #
 ```{r}
 mean_d[which.max(mean_d$mean), ]$interval;sum(is.na(ACTIV$steps))
@@ -63,7 +63,7 @@ mean(stp2$daily_steps);median(stp2$daily_steps)
 #
 ## Are there differences in activity patterns between weekdays and weekends?
 #
-# PART #4
+# PART 4
 #
 ```{r}
 ACTIV$date <- as.Date(strptime(ACTIV$date, format="%Y-%m-%d"))
