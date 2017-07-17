@@ -1,9 +1,10 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "PA1_template"
+author: "Anargyros Berdekas"
+date: "July 17, 2017"
+output: html_document
 ---
+
 #
 # COURSERA
 # REPRODUCIBLE RESEARCH
