@@ -4,42 +4,13 @@ output:
   html_document:
     keep_md: true
 ---
-
-#
-#
 #
 # COURSERA
 # REPRODUCIBLE RESEARCH
 # COURSE PROJECT #1
-# 
 #
-#
-
 ## Loading and preprocessing the data
-
-
-
-## What is mean total number of steps taken per day?
-
-
-
-## What is the average daily activity pattern?
-
-
-
-## Imputing missing values
-
-
-
-## Are there differences in activity patterns between weekdays and weekends?
-
-
-#
-# PART #0 INTRODUCTORY PART, INCL. LOADING DATA
-#
-# ####################################################################
-# ####################################################################
-#
+# PART 0
 #
 ```{r}
 setwd("/home/xfant0m/#R");library(ggplot2);library(knitr);knitr::opts_chunk$set(
@@ -51,15 +22,8 @@ ACTIV <- read.csv("/home/xfant0m/#R/activity.csv");ACTIV$date <- as.POSIXct(
 summary(ACTIV)
 ```
 #
-#
-# ####################################################################
-# ####################################################################
-#
-# PART #1
-#
-# ####################################################################
-# ####################################################################
-#
+## What is mean total number of steps taken per day?
+# PART 1
 #
 ```{r}
 ACTIV_total <- with(ACTIV, aggregate(steps, by = list(date), FUN = sum, 
@@ -71,15 +35,9 @@ ACTIV_total <- with(ACTIV, aggregate(steps, by = list(date), FUN = sum,
 median(ACTIV_total$steps)
 ```
 #
+## What is the average daily activity pattern?
 #
-# ####################################################################
-# ####################################################################
-#
-# PART #2
-#
-# ####################################################################
-# ####################################################################
-#
+# PART 2
 #
 ```{r}
 mean_d <- aggregate(ACTIV$steps, 
@@ -89,15 +47,9 @@ mean_d <- aggregate(ACTIV$steps,
     main="steps per interval")
 ```
 #
-#
-# ####################################################################
-# ####################################################################
+## Imputing missing values
 #
 # PART #3
-#
-# ####################################################################
-# ####################################################################
-#
 #
 ```{r}
 mean_d[which.max(mean_d$mean), ]$interval;sum(is.na(ACTIV$steps))
@@ -109,15 +61,9 @@ hist(stp2$daily_steps, col = "red", xlab = "steps per day",
 mean(stp2$daily_steps);median(stp2$daily_steps)
 ```
 #
-#
-# ####################################################################
-# ####################################################################
+## Are there differences in activity patterns between weekdays and weekends?
 #
 # PART #4
-#
-# ####################################################################
-# ####################################################################
-#
 #
 ```{r}
 ACTIV$date <- as.Date(strptime(ACTIV$date, format="%Y-%m-%d"))
